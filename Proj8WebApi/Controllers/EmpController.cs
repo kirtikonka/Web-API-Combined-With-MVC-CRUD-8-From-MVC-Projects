@@ -17,7 +17,7 @@ namespace Proj8WebApi.Controllers
 
         [Route("AddEmp")]
         [HttpPost]
-        public IActionResult AddNewEmp(Emp e)
+        public IActionResult AddNewEmp([FromForm]Emp e)
         {
             db.employees.Add(e);
             db.SaveChanges();
@@ -34,7 +34,7 @@ namespace Proj8WebApi.Controllers
 
         [Route("EditEmp/{id}")]
         [HttpGet]
-        public IActionResult EditEmpData(int id)
+        public IActionResult EditEmpData([FromForm]int id)
         {
             var data = db.employees.Find(id);
             if (data != null)
@@ -48,7 +48,7 @@ namespace Proj8WebApi.Controllers
 
         [Route("DelEmp/{id}")]
         [HttpDelete]
-        public IActionResult DeleteEmpData(int id)
+        public IActionResult DeleteEmpData([FromForm]int id)
         {
             var data = db.employees.Find(id);
             if (data != null)
@@ -61,7 +61,7 @@ namespace Proj8WebApi.Controllers
 
         [Route("UpdEmp")]
         [HttpPut]
-        public IActionResult UpdateEmpData(Emp e)
+        public IActionResult UpdateEmpData([FromForm] Emp e)
         {
             db.employees.Update(e);
             db.SaveChanges();
@@ -70,7 +70,7 @@ namespace Proj8WebApi.Controllers
 
         [Route("AddMultiple")]
         [HttpPost]
-        public IActionResult AddMultipeEmp(List<Emp> emps)
+        public IActionResult AddMultipeEmp([FromForm] List<Emp> emps)
         {
             db.employees.AddRange(emps);
             db.SaveChanges();
