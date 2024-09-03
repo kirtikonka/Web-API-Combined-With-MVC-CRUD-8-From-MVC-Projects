@@ -39,10 +39,11 @@ namespace Proj8WebApi.Controllers
             var data = db.employees.Find(id);
             if (data != null)
             {
+
                 db.employees.Update(data);
                 db.SaveChanges();
             }
-            return Ok("Edited Successfully");
+            return Ok("Emp Edited Successfully");
         }
 
         [Route("DelEmp/{id}")]
@@ -55,7 +56,43 @@ namespace Proj8WebApi.Controllers
                 db.employees.Remove(data);
                 db.SaveChanges();
             }
-            return Ok("Deleted Successfully");
+            return Ok("Emp Deleted Successfully");
+        }
+
+        [Route("UpdEmp")]
+        [HttpPut]
+        public IActionResult UpdateEmpData(Emp e)
+        {
+            db.employees.Update(e);
+            db.SaveChanges();
+            return Ok("Emp Updated Successfully");
+        }
+
+        [Route("AddMultiple")]
+        [HttpPost]
+        public IActionResult AddMultipeEmp(List<Emp> emps)
+        {
+            db.employees.AddRange(emps);
+            db.SaveChanges();
+            return Ok("Multiple Employees Added Successfully");
+        }
+
+        [Route("DelMultiple")]
+        [HttpDelete]
+        public IActionResult DelMultipleEmp([FromForm]List<int> ids)
+        {
+            var data = db.employees.Where(x=>ids.Contains(x.Id)).ToList();
+            db.employees.RemoveRange(data);
+            db.SaveChanges();
+            return Ok("Multiple Employees Deleted Successfully");
+        }
+
+        [Route("SearchBy")]
+        [HttpGet]
+        public IActionResult SearchBy(string e)
+        {
+            var data = db.employees.Where(x=>e.Contains(x.Name)||e.Contains(x.Dept)||e.Contains(x.Salary.ToString())||e.Contains(x.Id.ToString()));
+            return Ok(data);
         }
     }
 }
